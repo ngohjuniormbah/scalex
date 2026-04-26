@@ -11,9 +11,12 @@ import {
   type FounderPublic,
   type Application,
   type ConnectionDTO,
+  type PostDTO,
 } from "@/lib/api";
 import { DashboardNav } from "@/components/dashboard/Nav";
 import { ProfileCard } from "@/components/dashboard/ProfileCard";
+import { PostComposer } from "@/components/dashboard/PostComposer";
+import { PostCard } from "@/components/dashboard/PostCard";
 
 export default function DashboardPage() {
   const { me, loading, logout } = useAuth();
@@ -21,6 +24,7 @@ export default function DashboardPage() {
   const [app, setApp] = useState<Application | null>(null);
   const [suggested, setSuggested] = useState<FounderPublic[]>([]);
   const [connections, setConnections] = useState<ConnectionDTO[]>([]);
+  const [posts, setPosts] = useState<PostDTO[]>([]);
 
   useEffect(() => {
     if (!me) return;
@@ -31,6 +35,7 @@ export default function DashboardPage() {
       .myConnections()
       .then((r) => setConnections(r.accepted))
       .catch(() => {});
+    api.feed().then(setPosts).catch(() => {});
   }, [me]);
 
   if (loading || !me) {
@@ -67,7 +72,7 @@ export default function DashboardPage() {
 
       <div className="mx-auto max-w-7xl px-4 md:px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* LEFT: profile card */}
+          {/* LEFT */}
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -89,13 +94,40 @@ export default function DashboardPage() {
               />
             )}
 
+            {/* Post composer */}
+            <PostComposer
+              me={me}
+              onPosted={(p) => setPosts((cur) => [p, ...cur])}
+            />
+
+            {/* Feed */}
+            {posts.length > 0 && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between px-1">
+                  <h2 className="text-sm font-semibold text-mute-700 uppercase tracking-wider">
+                    Recent posts
+                  </h2>
+                </div>
+                {posts.map((p) => (
+                  <PostCard
+                    key={p.id}
+                    post={p}
+                    currentUserId={me.id}
+                    onDeleted={(id) =>
+                      setPosts((cur) => cur.filter((x) => x.id !== id))
+                    }
+                  />
+                ))}
+              </div>
+            )}
+
             {/* Application status card */}
             <div className="rounded-xl border border-mute-200 bg-white p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold">Application status</h2>
                 {!app && (
                   <Link
-                    href="/apply"
+                    href="/register"
                     className="text-sm text-brand hover:text-brand-deep"
                   >
                     Start application →
@@ -106,9 +138,7 @@ export default function DashboardPage() {
                 <ApplicationStatusBlock app={app} />
               ) : (
                 <p className="text-sm text-mute-500">
-                  You haven&apos;t submitted an application yet. Until you do,
-                  your profile is visible in the directory but not eligible for
-                  funding review.
+                  You haven&apos;t submitted an application yet.
                 </p>
               )}
             </div>
@@ -165,7 +195,7 @@ export default function DashboardPage() {
             </div>
           </motion.div>
 
-          {/* RIGHT: suggested founders */}
+          {/* RIGHT */}
           <motion.aside
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}

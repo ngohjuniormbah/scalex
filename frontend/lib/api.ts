@@ -97,6 +97,19 @@ export type MessageDTO = {
   read_at: string | null;
 };
 
+export type PostDTO = {
+  id: number;
+  author_id: number;
+  author_name: string;
+  author_headline: string;
+  author_photo: string;
+  body: string;
+  image_url: string;
+  link_url: string;
+  created_at: string;
+  updated_at: string;
+};
+
 function authHeader(): Record<string, string> {
   if (typeof window === "undefined") return {};
   const t = localStorage.getItem("scalex_token");
@@ -210,6 +223,26 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ body }),
     }),
+
+  // Posts
+  feed: () => apiFetch<PostDTO[]>("/api/posts/"),
+  createPost: (data: { body: string; image_url?: string; link_url?: string }) =>
+    apiFetch<PostDTO>("/api/posts/", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  postsByAuthor: (userId: number) =>
+    apiFetch<PostDTO[]>(`/api/posts/by/${userId}/`),
+  deletePost: (postId: number) =>
+    apiFetch<void>(`/api/posts/${postId}/`, { method: "DELETE" }),
+  postUploadUrl: (contentType: string) =>
+    apiFetch<{ upload_url: string; public_url: string; token: string }>(
+      "/api/posts/upload-url/",
+      {
+        method: "POST",
+        body: JSON.stringify({ content_type: contentType }),
+      }
+    ),
 
   // Admin
   adminStats: () =>

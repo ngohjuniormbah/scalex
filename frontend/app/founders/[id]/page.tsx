@@ -8,9 +8,11 @@ import {
   api,
   type FounderPublic,
   type ConnectionDTO,
+  type PostDTO,
 } from "@/lib/api";
 import { DashboardNav } from "@/components/dashboard/Nav";
 import { ProfileCard } from "@/components/dashboard/ProfileCard";
+import { PostCard } from "@/components/dashboard/PostCard";
 
 export default function FounderDetailPage() {
   const router = useRouter();
@@ -19,6 +21,7 @@ export default function FounderDetailPage() {
   const { me, loading, logout } = useAuth();
   const [founder, setFounder] = useState<FounderPublic | null>(null);
   const [conn, setConn] = useState<ConnectionDTO | null>(null);
+  const [posts, setPosts] = useState<PostDTO[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [working, setWorking] = useState(false);
 
@@ -32,6 +35,7 @@ export default function FounderDetailPage() {
       );
       setConn(found || null);
     });
+    api.postsByAuthor(userId).then(setPosts).catch(() => {});
   }, [me, userId]);
 
   async function connect() {
@@ -88,7 +92,7 @@ export default function FounderDetailPage() {
     <main className="min-h-screen bg-mute-50">
       <DashboardNav me={me} onLogout={logout} />
 
-      <div className="mx-auto max-w-3xl px-4 md:px-6 py-8">
+      <div className="mx-auto max-w-3xl px-4 md:px-6 py-8 space-y-6">
         <ProfileCard
           founder={founder}
           rightSlot={
@@ -132,8 +136,19 @@ export default function FounderDetailPage() {
         />
 
         {error && (
-          <div className="mt-4 rounded-lg border border-red-200 bg-red-50 text-red-700 text-sm px-4 py-3">
+          <div className="rounded-lg border border-red-200 bg-red-50 text-red-700 text-sm px-4 py-3">
             {error}
+          </div>
+        )}
+
+        {posts.length > 0 && (
+          <div className="space-y-4">
+            <h2 className="text-sm font-semibold text-mute-700 uppercase tracking-wider px-1">
+              Posts
+            </h2>
+            {posts.map((p) => (
+              <PostCard key={p.id} post={p} currentUserId={me.id} />
+            ))}
           </div>
         )}
       </div>

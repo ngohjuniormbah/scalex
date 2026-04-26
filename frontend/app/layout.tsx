@@ -10,6 +10,10 @@ export const metadata: Metadata = {
     description: "We fund the founders shaping tomorrow.",
     type: "website",
   },
+  icons: {
+    icon: "/icon.svg",
+    apple: "/apple-icon.svg",
+  },
 };
 
 export default function RootLayout({

@@ -27,7 +27,7 @@ export function ProfileCard({
     <div className="rounded-xl border border-mute-200 bg-white overflow-hidden">
       {/* Banner */}
       <div
-        className="h-32 md:h-44 relative"
+        className="h-32 md:h-44"
         style={{
           background: founder.banner_url
             ? `url(${founder.banner_url}) center/cover`
@@ -35,47 +35,48 @@ export function ProfileCard({
         }}
       />
 
-      <div className="px-6 pb-6">
-        {/* Avatar overlap */}
-        <div className="flex items-end justify-between -mt-12 md:-mt-14">
-          <div className="w-24 h-24 md:w-28 md:h-28 rounded-full ring-4 ring-white bg-mute-100 overflow-hidden flex items-center justify-center text-2xl md:text-3xl font-semibold text-mute-500">
-            {founder.photo_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={founder.photo_url}
-                alt={founder.full_name}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              initials(founder.full_name)
-            )}
+      {/* Avatar row — avatar pulled up, then content sits below it */}
+      <div className="px-6">
+        <div className="flex items-end justify-between">
+          <div className="-mt-14 md:-mt-16">
+            <div className="w-28 h-28 md:w-32 md:h-32 rounded-full ring-4 ring-white bg-mute-100 overflow-hidden flex items-center justify-center text-3xl font-semibold text-mute-500">
+              {founder.photo_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={founder.photo_url}
+                  alt={founder.full_name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                initials(founder.full_name)
+              )}
+            </div>
           </div>
-          <div className="pb-1">{rightSlot}</div>
+          <div className="pb-2">{rightSlot}</div>
         </div>
+      </div>
 
-        {/* Name + headline */}
-        <div className="mt-4">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h1 className="text-xl md:text-2xl font-semibold tracking-tightest text-ink">
-              {founder.full_name || "Unnamed founder"}
-            </h1>
-            {founder.is_verified && (
-              <span className="inline-flex items-center gap-1 text-xs text-brand bg-brand-soft px-2 py-0.5 rounded-full">
-                <CheckCircle2 className="w-3 h-3" /> Verified
-              </span>
-            )}
-          </div>
-          {founder.headline && (
-            <p className="text-mute-700 mt-1">{founder.headline}</p>
-          )}
-          {founder.location && (
-            <p className="text-sm text-mute-500 mt-1 flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5" /> {founder.location}
-            </p>
+      {/* Body — separate from avatar row so nothing overlaps */}
+      <div className="px-6 pt-4 pb-6">
+        <div className="flex items-center gap-2 flex-wrap">
+          <h1 className="text-xl md:text-2xl font-semibold tracking-tightest text-ink">
+            {founder.full_name || "Unnamed founder"}
+          </h1>
+          {founder.is_verified && (
+            <span className="inline-flex items-center gap-1 text-xs text-brand bg-brand-soft px-2 py-0.5 rounded-full">
+              <CheckCircle2 className="w-3 h-3" /> Verified
+            </span>
           )}
         </div>
+        {founder.headline && (
+          <p className="text-mute-700 mt-1">{founder.headline}</p>
+        )}
+        {founder.location && (
+          <p className="text-sm text-mute-500 mt-1 flex items-center gap-1">
+            <MapPin className="w-3.5 h-3.5" /> {founder.location}
+          </p>
+        )}
 
-        {/* Skills */}
         {founder.skills?.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
             {founder.skills.slice(0, 8).map((s) => (
@@ -89,18 +90,16 @@ export function ProfileCard({
           </div>
         )}
 
-        {/* Bio */}
         {founder.bio && (
           <p className="mt-5 text-sm text-mute-700 leading-relaxed whitespace-pre-line">
             {founder.bio}
           </p>
         )}
 
-        {/* Links */}
         {(founder.linkedin || founder.github || founder.twitter || founder.website) && (
           <div className="mt-5 flex flex-wrap gap-3 text-sm">
             {founder.linkedin && (
-              <a
+              
                 href={founder.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -110,7 +109,7 @@ export function ProfileCard({
               </a>
             )}
             {founder.github && (
-              <a
+              
                 href={founder.github}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -120,7 +119,7 @@ export function ProfileCard({
               </a>
             )}
             {founder.twitter && (
-              <a
+              
                 href={founder.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -130,7 +129,7 @@ export function ProfileCard({
               </a>
             )}
             {founder.website && (
-              <a
+              
                 href={founder.website}
                 target="_blank"
                 rel="noopener noreferrer"

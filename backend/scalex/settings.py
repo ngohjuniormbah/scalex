@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "apps.applications",
     "apps.founders",
     "apps.social",
+    "apps.posts",
 ]
 
 MIDDLEWARE = [
