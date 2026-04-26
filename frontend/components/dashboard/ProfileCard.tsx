@@ -25,9 +25,8 @@ export function ProfileCard({
 }) {
   return (
     <div className="rounded-xl border border-mute-200 bg-white overflow-hidden">
-      {/* Banner */}
       <div
-        className="h-32 md:h-44"
+        className="h-28 sm:h-32 md:h-44"
         style={{
           background: founder.banner_url
             ? `url(${founder.banner_url}) center/cover`
@@ -35,11 +34,10 @@ export function ProfileCard({
         }}
       />
 
-      {/* Avatar row — avatar pulled up, then content sits below it */}
-      <div className="px-6">
-        <div className="flex items-end justify-between">
-          <div className="-mt-14 md:-mt-16">
-            <div className="w-28 h-28 md:w-32 md:h-32 rounded-full ring-4 ring-white bg-mute-100 overflow-hidden flex items-center justify-center text-3xl font-semibold text-mute-500">
+      <div className="px-4 sm:px-6">
+        <div className="flex items-end justify-between gap-3">
+          <div className="-mt-12 sm:-mt-14 md:-mt-16 shrink-0">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full ring-4 ring-white bg-mute-100 overflow-hidden flex items-center justify-center text-2xl sm:text-3xl font-semibold text-mute-500">
               {founder.photo_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -52,14 +50,13 @@ export function ProfileCard({
               )}
             </div>
           </div>
-          <div className="pb-2">{rightSlot}</div>
+          <div className="pb-2 min-w-0">{rightSlot}</div>
         </div>
       </div>
 
-      {/* Body — separate from avatar row so nothing overlaps */}
-      <div className="px-6 pt-4 pb-6">
+      <div className="px-4 sm:px-6 pt-4 pb-6">
         <div className="flex items-center gap-2 flex-wrap">
-          <h1 className="text-xl md:text-2xl font-semibold tracking-tightest text-ink">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-semibold tracking-tightest text-ink break-words">
             {founder.full_name || "Unnamed founder"}
           </h1>
           {founder.is_verified && (
@@ -69,11 +66,11 @@ export function ProfileCard({
           )}
         </div>
         {founder.headline && (
-          <p className="text-mute-700 mt-1">{founder.headline}</p>
+          <p className="text-mute-700 mt-1 text-sm sm:text-base">{founder.headline}</p>
         )}
         {founder.location && (
           <p className="text-sm text-mute-500 mt-1 flex items-center gap-1">
-            <MapPin className="w-3.5 h-3.5" /> {founder.location}
+            <MapPin className="w-3.5 h-3.5 shrink-0" /> {founder.location}
           </p>
         )}
 
@@ -91,7 +88,7 @@ export function ProfileCard({
         )}
 
         {founder.bio && (
-          <p className="mt-5 text-sm text-mute-700 leading-relaxed whitespace-pre-line">
+          <p className="mt-5 text-sm text-mute-700 leading-relaxed whitespace-pre-line break-words">
             {founder.bio}
           </p>
         )}
