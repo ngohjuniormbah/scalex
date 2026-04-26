@@ -108,6 +108,26 @@ export type PostDTO = {
   link_url: string;
   created_at: string;
   updated_at: string;
+  like_count: number;
+  comment_count: number;
+  liked_by_me: boolean;
+};
+
+export type CommentDTO = {
+  id: number;
+  author_id: number;
+  author_name: string;
+  author_headline: string;
+  author_photo: string;
+  body: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type LikeResponse = {
+  post_id: number;
+  liked_by_me: boolean;
+  like_count: number;
 };
 
 function authHeader(): Record<string, string> {
@@ -243,6 +263,23 @@ export const api = {
         body: JSON.stringify({ content_type: contentType }),
       }
     ),
+
+  // Reactions
+  likePost: (postId: number) =>
+    apiFetch<LikeResponse>(`/api/posts/${postId}/like/`, { method: "POST" }),
+  unlikePost: (postId: number) =>
+    apiFetch<LikeResponse>(`/api/posts/${postId}/like/`, { method: "DELETE" }),
+
+  // Comments
+  postComments: (postId: number) =>
+    apiFetch<CommentDTO[]>(`/api/posts/${postId}/comments/`),
+  addComment: (postId: number, body: string) =>
+    apiFetch<CommentDTO>(`/api/posts/${postId}/comments/`, {
+      method: "POST",
+      body: JSON.stringify({ body }),
+    }),
+  deleteComment: (commentId: number) =>
+    apiFetch<void>(`/api/posts/comments/${commentId}/`, { method: "DELETE" }),
 
   // Admin
   adminStats: () =>
