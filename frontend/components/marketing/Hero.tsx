@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 export function Hero() {
   return (
     <section className="relative min-h-screen bg-ink text-white overflow-hidden bg-grid">
-      {/* Soft blue radial glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -54,7 +53,7 @@ export function Hero() {
           className="mt-12 flex items-center justify-center gap-4 flex-wrap"
         >
           <Link
-            href="/apply"
+            href="/register"
             className="inline-flex items-center gap-2 rounded-lg bg-brand hover:bg-brand-deep transition-colors text-white font-medium px-6 py-3 shadow-lift"
           >
             Apply for funding <span aria-hidden>→</span>
@@ -67,7 +66,6 @@ export function Hero() {
           </Link>
         </motion.div>
 
-        {/* Floating orb — inspired by the Scale AI hero sphere */}
         <motion.div
           aria-hidden
           initial={{ opacity: 0, scale: 0.9 }}
@@ -93,7 +91,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Caption row below hero */}
       <div className="relative z-10 pb-10 text-center text-xs text-white/40 tracking-widest uppercase">
         Trusted by founders across 4 continents
       </div>

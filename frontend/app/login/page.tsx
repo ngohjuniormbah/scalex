@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
@@ -11,6 +11,15 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      localStorage.getItem("scalex_token")
+    ) {
+      router.push("/dashboard");
+    }
+  }, [router]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,7 +91,7 @@ export default function LoginPage() {
 
           <p className="mt-6 text-sm text-mute-500 text-center">
             Don&apos;t have an account?{" "}
-            <Link href="/apply" className="text-brand hover:underline">
+            <Link href="/register" className="text-brand hover:underline">
               Apply
             </Link>
           </p>

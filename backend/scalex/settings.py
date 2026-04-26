@@ -10,7 +10,6 @@ from decouple import Csv, config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Security
 SECRET_KEY = config("SECRET_KEY", default="dev-insecure-change-me")
 DEBUG = config("DEBUG", default=True, cast=bool)
 ALLOWED_HOSTS = config(
@@ -26,12 +25,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Third-party
     "rest_framework",
     "corsheaders",
-    # Local
     "apps.accounts",
     "apps.applications",
+    "apps.founders",
+    "apps.social",
 ]
 
 MIDDLEWARE = [
@@ -66,8 +65,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "scalex.wsgi.application"
 
-# Database — defaults to SQLite if no DATABASE_URL is provided (handy for first-run testing).
-# In production, DATABASE_URL should point at Supabase Postgres.
 _db_url = config("DATABASE_URL", default="")
 if _db_url:
     DATABASES = {
@@ -81,10 +78,8 @@ else:
         }
     }
 
-# Custom user
 AUTH_USER_MODEL = "accounts.User"
 
-# Password hashing — Argon2 first
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
@@ -115,7 +110,6 @@ STORAGES = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# DRF + JWT
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -131,7 +125,6 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-# CORS
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
     default="http://localhost:3000",
@@ -139,7 +132,6 @@ CORS_ALLOWED_ORIGINS = config(
 )
 CORS_ALLOW_CREDENTIALS = True
 
-# Production security
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True

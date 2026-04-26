@@ -27,12 +27,12 @@ export function CTA() {
               Building something that matters?
             </h2>
             <p className="mt-6 text-white/60 text-lg max-w-xl mx-auto">
-              Applications take under 30 minutes. We respond to every founder
-              within 14 days.
+              Applications take 30–45 minutes and require references.
+              We respond to every founder within 14 days.
             </p>
             <div className="mt-10 flex items-center justify-center gap-4 flex-wrap">
               <Link
-                href="/apply"
+                href="/register"
                 className="inline-flex items-center gap-2 rounded-lg bg-brand hover:bg-brand-deep transition-colors text-white font-medium px-6 py-3 shadow-lift"
               >
                 Apply for funding <span aria-hidden>→</span>

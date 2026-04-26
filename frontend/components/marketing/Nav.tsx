@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const links = [
@@ -11,6 +12,14 @@ const links = [
 ];
 
 export function Nav() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setLoggedIn(
+      typeof window !== "undefined" && !!localStorage.getItem("scalex_token")
+    );
+  }, []);
+
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
@@ -39,18 +48,29 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/login"
-            className="text-sm text-white/70 hover:text-white transition-colors"
-          >
-            Log in
-          </Link>
-          <Link
-            href="/apply"
-            className="inline-flex items-center gap-2 rounded-lg bg-brand hover:bg-brand-deep transition-colors text-white text-sm font-medium px-4 py-2"
-          >
-            Apply <span aria-hidden>→</span>
-          </Link>
+          {loggedIn ? (
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-2 rounded-lg bg-brand hover:bg-brand-deep transition-colors text-white text-sm font-medium px-4 py-2"
+            >
+              Dashboard <span aria-hidden>→</span>
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-sm text-white/70 hover:text-white transition-colors"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/register"
+                className="inline-flex items-center gap-2 rounded-lg bg-brand hover:bg-brand-deep transition-colors text-white text-sm font-medium px-4 py-2"
+              >
+                Apply <span aria-hidden>→</span>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </motion.header>
