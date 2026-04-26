@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { Bell, Search, Users, Inbox, LayoutGrid, LogOut, Shield } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Bell, Users, Inbox, LayoutGrid, LogOut, Shield } from "lucide-react";
 import { type Me } from "@/lib/api";
+import { SearchBar } from "@/components/dashboard/SearchBar";
 
 export function DashboardNav({ me, onLogout }: { me: Me | null; onLogout: () => void }) {
   const pathname = usePathname();
@@ -24,19 +25,7 @@ export function DashboardNav({ me, onLogout }: { me: Me | null; onLogout: () => 
           scale<span className="text-brand">x</span>
         </Link>
 
-        <div className="hidden md:flex items-center bg-mute-100 rounded-md px-3 h-9 w-72">
-          <Search className="w-4 h-4 text-mute-500 mr-2" />
-          <input
-            placeholder="Search founders, sectors…"
-            className="bg-transparent text-sm flex-1 outline-none"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                const v = (e.target as HTMLInputElement).value.trim();
-                if (v) window.location.href = `/founders?q=${encodeURIComponent(v)}`;
-              }
-            }}
-          />
-        </div>
+        <SearchBar />
 
         <nav className="flex items-center gap-1 md:gap-2 ml-auto">
           {items.map((it) => {

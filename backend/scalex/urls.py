@@ -15,4 +15,5 @@ urlpatterns = [
     path("api/founders/", include("apps.founders.urls")),
     path("api/social/", include("apps.social.urls")),
     path("api/posts/", include("apps.posts.urls")),
+    path("api/search/", include("apps.search.urls")),
 ]
