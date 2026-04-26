@@ -99,7 +99,7 @@ export function ProfileCard({
         {(founder.linkedin || founder.github || founder.twitter || founder.website) && (
           <div className="mt-5 flex flex-wrap gap-3 text-sm">
             {founder.linkedin && (
-              
+              <a
                 href={founder.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -109,7 +109,7 @@ export function ProfileCard({
               </a>
             )}
             {founder.github && (
-              
+              <a
                 href={founder.github}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -119,7 +119,7 @@ export function ProfileCard({
               </a>
             )}
             {founder.twitter && (
-              
+              <a
                 href={founder.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -129,7 +129,7 @@ export function ProfileCard({
               </a>
             )}
             {founder.website && (
-              
+              <a
                 href={founder.website}
                 target="_blank"
                 rel="noopener noreferrer"

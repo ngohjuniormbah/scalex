@@ -117,7 +117,7 @@ export function PostCard({
 
       {/* Link */}
       {post.link_url && (
-        
+        <a
           href={post.link_url}
           target="_blank"
           rel="noopener noreferrer"
